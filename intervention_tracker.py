@@ -1,60 +1,90 @@
 import json
 import os
-from datetime import datetime
+import pandas as pd
 
 DATA_FILE = "interventions.json"
 
+COLUMNS = [
+    "student_id",
+    "student_name",
+    "faculty_name",
+    "intervention_type",
+    "notes",
+    "status",
+    "created_at",
+]
+
 
 def load_interventions():
-    """Load saved faculty intervention records."""
+    """Load all saved faculty intervention records."""
     if not os.path.exists(DATA_FILE):
         return []
 
     try:
         with open(DATA_FILE, "r", encoding="utf-8") as file:
-            return json.load(file)
+            data = json.load(file)
+            return data if isinstance(data, list) else []
     except (json.JSONDecodeError, OSError):
         return []
 
 
-def save_intervention(record):
-    """Save a faculty intervention record."""
-    records = load_interventions()
+def add_intervention(
+    student_id,
+    student_name="",
+    faculty_name="",
+    intervention_type="General",
+    notes="",
+    status="Pending",
+    **kwargs,
+):
+    """Add a new faculty intervention."""
+    from datetime import datetime
 
-    record["created_at"] = datetime.now().isoformat()
+    record = {
+        "student_id": str(student_id),
+        "student_name": student_name,
+        "faculty_name": faculty_name,
+        "intervention_type": intervention_type,
+        "notes": notes,
+        "status": status,
+        "created_at": datetime.now().isoformat(),
+    }
+
+    record.update(kwargs)
+
+    records = load_interventions()
     records.append(record)
 
     with open(DATA_FILE, "w", encoding="utf-8") as file:
         json.dump(records, file, indent=2, ensure_ascii=False)
 
-    return True
+    return record
 
 
-def get_student_interventions(student_id):
-    """Get intervention records for one student."""
+def update_intervention_status(intervention_id, status):
+    """Update an intervention's status."""
     records = load_interventions()
+    updated = False
 
-    return [
-        record
-        for record in records
-        if str(record.get("student_id")) == str(student_id)
-    ]
-
-
-def delete_intervention(student_id, created_at):
-    """Delete a specific intervention record."""
-    records = load_interventions()
-
-    updated_records = [
-        record
-        for record in records
-        if not (
-            str(record.get("student_id")) == str(student_id)
-            and record.get("created_at") == created_at
+    for index, record in enumerate(records):
+        record_id = record.get(
+            "intervention_id",
+            record.get("id", index),
         )
-    ]
 
-    with open(DATA_FILE, "w", encoding="utf-8") as file:
-        json.dump(updated_records, file, indent=2, ensure_ascii=False)
+        if str(record_id) == str(intervention_id):
+            record["status"] = status
+            updated = True
+            break
 
-    return len(updated_records) != len(records)
+    if updated:
+        with open(DATA_FILE, "w", encoding="utf-8") as file:
+            json.dump(records, file, indent=2, ensure_ascii=False)
+
+    return updated
+
+
+def interventions_dataframe():
+    """Return intervention records as a Pandas DataFrame."""
+    records = load_interventions()
+    return pd.DataFrame(records, columns=COLUMNS)
