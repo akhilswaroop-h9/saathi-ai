@@ -1,14 +1,12 @@
-import requests
+import os
 import json
-
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "qwen3:1.7b"
+import streamlit as st
+from groq import Groq
 
 
 def generate_student_insight(student_data):
     """
-    Generate AI-powered student support recommendations
-    using the local Ollama model.
+    Generate student support recommendations using a hosted AI model.
     """
 
     prompt = f"""
@@ -38,38 +36,35 @@ Rules:
 """
 
     try:
-        response = requests.post(
-            OLLAMA_URL,
-            json={
-                "model": MODEL_NAME,
-                "prompt": prompt,
-                "stream": False,
-            },
-            timeout=180,
+        api_key = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
+
+        if not api_key:
+            return "AI service is not configured. Please add GROQ_API_KEY in Streamlit Secrets."
+
+        client = Groq(api_key=api_key)
+
+        response = client.chat.completions.create(
+            model="llama-3.1-8b-instant",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are SAATHI AI, a respectful student-success "
+                        "assistant. Provide practical, evidence-based guidance."
+                    ),
+                },
+                {"role": "user", "content": prompt},
+            ],
+            temperature=0.3,
         )
 
-        response.raise_for_status()
-        result = response.json()
-
-        return result.get(
-            "response",
+        return response.choices[0].message.content or (
             "The AI did not return a response."
         )
 
-    except requests.exceptions.ConnectionError:
+    except Exception as error:
+        print(f"SAATHI AI error: {error}")
         return (
-            "Ollama is not running. "
-            "Please start Ollama and try again."
+            "The AI service could not complete the request. "
+            "Please check the API configuration and try again."
         )
-
-    except requests.exceptions.Timeout:
-        return (
-            "The AI is taking too long to respond. "
-            "Please try again."
-        )
-
-    except requests.exceptions.RequestException as error:
-        return f"AI request failed: {error}"
-
-    except (ValueError, json.JSONDecodeError):
-        return "Could not process the AI response."
