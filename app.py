@@ -7,7 +7,6 @@ from intervention_tracker import (
     update_intervention_status,
     interventions_dataframe,
 )
-from ai_engine import generate_student_insight
 
 # ---------------- PAGE CONFIGURATION ----------------
 
