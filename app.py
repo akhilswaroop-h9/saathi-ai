@@ -1653,7 +1653,7 @@ elif page == "Faculty Progress Tracking":
             "Create your first intervention above."
         )
 elif page == "AI Student Insights":
-    from ai_engine import generate_student_insight
+    
 
     st.title("🤖 AI Student Insights")
     st.write(
