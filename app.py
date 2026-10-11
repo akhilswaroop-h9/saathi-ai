@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from ai_engine import generate_student_insight
 from intervention_tracker import (
     load_interventions,
     add_intervention,
@@ -1536,7 +1537,7 @@ elif page == "Faculty Progress Tracking":
             ],
         )
         
-    from ai_engine import generate_student_insight
+    
 
         student_data = selected_student.to_dict()
 
