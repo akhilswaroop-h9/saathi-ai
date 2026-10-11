@@ -1536,9 +1536,6 @@ elif page == "Faculty Progress Tracking":
                 "Soft Skills Development",
             ],
         )
-        
-    
-
         student_data = selected_student.to_dict()
 
         with st.spinner("Generating intervention suggestions..."):
