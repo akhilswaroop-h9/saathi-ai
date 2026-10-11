@@ -1536,6 +1536,8 @@ elif page == "Faculty Progress Tracking":
             ],
         )
         from ai_engine import generate_student_insight
+
+        ai_suggestion = generate_student_insight(student_data)
         
         student_data = selected_student.to_dict()
 
