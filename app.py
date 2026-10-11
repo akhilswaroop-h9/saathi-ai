@@ -1535,6 +1535,8 @@ elif page == "Faculty Progress Tracking":
                 "Soft Skills Development",
             ],
         )
+        from ai_engine import generate_student_insight
+        
         student_data = selected_student.to_dict()
 
         with st.spinner("Generating intervention suggestions..."):
