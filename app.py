@@ -227,40 +227,7 @@ if not st.session_state.intro_completed:
 # ================= END SAATHI AI INTRO =================
 # ---------------- CUSTOM DESIGN ----------------
 
-st.markdown("""
-<style>
-/* Force the entire application into light mode */
-.stApp,
-[data-testid="stAppViewContainer"],
-[data-testid="stMain"] {
-    background-color: #F3F6FC !important;
-    color: #17233C !important;
-}
 
-/* Main content */
-[data-testid="stMain"] .block-container {
-    background-color: #F3F6FC !important;
-}
-
-/* Sidebar */
-[data-testid="stSidebar"] {
-    background-color: #FFFFFF !important;
-}
-
-/* Cards and bordered containers */
-[data-testid="stMetric"],
-[data-testid="stVerticalBlockBorderWrapper"] {
-    background-color: #FFFFFF !important;
-    color: #17233C !important;
-    border-color: #DCE5F2 !important;
-}
-
-/* Headings and text */
-h1, h2, h3, h4, p, label {
-    color: #17233C;
-}
-</style>
-""", unsafe_allow_html=True)
 st.markdown("""
 <style>
     .stApp {
