@@ -35,7 +35,7 @@ Rules:
 - Treat your output as guidance for faculty review, not a validated prediction.
 """
 
-        try:
+    try:
         api_key = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
 
         if not api_key:
