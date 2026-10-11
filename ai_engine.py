@@ -63,8 +63,7 @@ Rules:
         )
 
     except Exception as error:
-        print(f"SAATHI AI error: {error}")
-        return (
-            "The AI service could not complete the request. "
-            "Please check the API configuration and try again."
-        )
+    print(f"SAATHI AI error: {type(error).__name__}: {error}")
+    return (
+        f"AI Error: {type(error).__name__}: {error}"
+    )
