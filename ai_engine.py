@@ -62,8 +62,6 @@ Rules:
             "The AI did not return a response."
         )
 
-    except Exception as error:
-    print(f"SAATHI AI error: {type(error).__name__}: {error}")
-    return (
-        f"AI Error: {type(error).__name__}: {error}"
-    )
+        except Exception as error:
+        print(f"SAATHI AI error: {type(error).__name__}: {error}")
+        return "SAATHI AI could not generate a response. Please try again."
