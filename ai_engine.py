@@ -61,6 +61,6 @@ Rules:
         return response.choices[0].message.content or (
             "The AI did not return a response."
         )
-           except Exception as error:
-        print(f"SAATHI AI error: {type(error).__name__}: {error}")
-        return "SAATHI AI could not generate a response. Please try again."
+        except Exception as error:
+            print(f"SAATHI AI error: {type(error).__name__}: {error}")
+            return "SAATHI AI could not generate a response. Please try again."
