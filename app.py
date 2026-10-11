@@ -229,6 +229,40 @@ if not st.session_state.intro_completed:
 
 st.markdown("""
 <style>
+/* Force the entire application into light mode */
+.stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"] {
+    background-color: #F3F6FC !important;
+    color: #17233C !important;
+}
+
+/* Main content */
+[data-testid="stMain"] .block-container {
+    background-color: #F3F6FC !important;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: #FFFFFF !important;
+}
+
+/* Cards and bordered containers */
+[data-testid="stMetric"],
+[data-testid="stVerticalBlockBorderWrapper"] {
+    background-color: #FFFFFF !important;
+    color: #17233C !important;
+    border-color: #DCE5F2 !important;
+}
+
+/* Headings and text */
+h1, h2, h3, h4, p, label {
+    color: #17233C;
+}
+</style>
+""", unsafe_allow_html=True)
+st.markdown("""
+<style>
     .stApp {
         background-color: #F4F7FC;
     }
@@ -307,7 +341,7 @@ hr {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
 }
-/* ===== SAATHI AI THEME CONSISTENCY ===== */
+/* ===== SAATHI AI  CONSISTENCY ===== */
 
 /* Theme-aware main content */
 .stApp {
@@ -348,7 +382,7 @@ h1, h2, h3 {
     padding-bottom: 2rem;
 }
 
-/* Smooth theme transitions */
+/* Smooth  transitions */
 .stApp,
 [data-testid="stSidebar"],
 [data-testid="stMetric"] {
